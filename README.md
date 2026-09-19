@@ -79,17 +79,11 @@ Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "MaliMuhurSur
 
 Mali mühür süresi bittiğinde yapılması gereken resmi kriz prosedürleri ve detaylı rehberler için blogumuzu inceleyebilirsiniz:
 
-* 📄 [Mali Mühür Süresi Bitti! E-Fatura Kesemiyorum, Acil Ne Yapmalıyım? Şirketler İçin Kriz Yönetimi](https://eimza-kep.github.io/eimza-blog/posts/mali-muhur-suresi-doldu-ne-yapilmali.html)
-* 📄 [e-Defter Beratı Gönderiminde Son Gün Krizleri: Mali Mühür Sorunları Nasıl Aşılır?](https://eimza-kep.github.io/eimza-blog/posts/e-defter-berati-gonderimi-mali-muhur.html)
-* 📄 [E-İmza USB'mi Kaybettim/Çaldırdım, Ne Yapmalıyım? İptal ve Yenileme Rehberi](https://eimza-kep.github.io/eimza-blog/posts/e-imza-kayboldu-calindi-iptal-rehberi.html)
-* 📄 [E-İmza Cihazları (USB Token) Nasıl Çalışır? Çipin İçindeki Teknik Dünya](https://eimza-kep.github.io/eimza-blog/posts/e-imza-cihazlari-nasil-calisir-teknik-rehber.html)
-
 ---
 
 ## ⚖️ Lisans
 
 Bu yazılım [MIT Lisansı](LICENSE) ile lisanslanmıştır. Tamamen ücretsizdir.
-
 
 ### 📚 İlgili Rehber ve Çözümler
 * 📄 [Mali Mühür ile Bireysel E-İmza Arasındaki 3 Temel Fark](https://mali-muhur-merkezi.pages.dev/yazilar/mali-muhur-ve-e-imza-arasindaki-farklar.html)
