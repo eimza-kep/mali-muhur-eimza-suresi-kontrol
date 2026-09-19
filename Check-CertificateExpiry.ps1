@@ -110,7 +110,7 @@ Write-Host "Tarih: $($now.ToString('dd.MM.yyyy HH:mm')) | Uyarı Eşiği: $Alert
 if ($results.Count -eq 0) {
     Write-Host "[!] Bilgisayarda takılı veya yüklü bir E-İmza / Mali Mühür sertifikası bulunamadı." -ForegroundColor Yellow
     Write-Host "    İpucu: USB Token takılıysa AKİS veya kart okuyucu sürücüsünün açık olduğunu kontrol edin." -ForegroundColor DarkGray
-    Write-Host "`nRehber: https://eimza-kep.github.io/eimza-blog/posts/e-imza-cihazlari-nasil-calisir-teknik-rehber.html" -ForegroundColor Cyan
+    Write-Host "`nRehber: https://mali-muhur-merkezi.pages.dev/yazilar/mali-muhur-ve-e-imza-arasindaki-farklar.html" -ForegroundColor Cyan
     exit 0
 }
 
@@ -142,5 +142,5 @@ foreach ($r in $results) {
 Write-Host "`n------------------------------------------------------------------------------------------" -ForegroundColor Gray
 Write-Host "💡 ÖNEMLİ TAVSİYE: Mali mühür yenileme başvuruları TÜBİTAK Kamu SM tarafından ortalama" -ForegroundColor Yellow
 Write-Host "   3-7 iş gününde kargolanır. Son 30 güne girmeden önce başvurunuzu tamamlayın." -ForegroundColor Yellow
-Write-Host "   Detaylı Kriz Rehberi: https://eimza-kep.github.io/eimza-blog/posts/mali-muhur-suresi-doldu-ne-yapilmali.html" -ForegroundColor Cyan
+Write-Host "   Detaylı Kriz Rehberi: https://mali-muhur-merkezi.pages.dev/yazilar/mali-muhur-arizalandi-kayboldu-ne-yapilmali.html" -ForegroundColor Cyan
 Write-Host "==========================================================================================`n" -ForegroundColor Cyan
