@@ -49,6 +49,18 @@ irm https://raw.githubusercontent.com/eimza-kep/mali-muhur-eimza-suresi-kontrol/
 .\Check-CertificateExpiry.ps1 -AsJson
 ```
 
+### 5. CSV veya JSON Dosyasına Dışa Aktarma
+```powershell
+# CSV olarak kaydetme
+.\Check-CertificateExpiry.ps1 -ExportPath "sertifika-raporu.csv"
+
+# Yalnızca süresi dolan veya yaklaşanları filtreleme
+.\Check-CertificateExpiry.ps1 -OnlyExpiring
+
+# Kritik süredeki sertifikalarda hata kodu (exit code 1) döndürme (CI/CD / Monitoring)
+.\Check-CertificateExpiry.ps1 -FailOnCritical
+```
+
 ---
 
 ## ⏰ Otomatik Haftalık Kontrol Kurulumu (Önerilen)
