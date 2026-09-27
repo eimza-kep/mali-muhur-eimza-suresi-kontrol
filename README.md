@@ -1,105 +1,70 @@
-# Mali Mühür & E-İmza Bitiş Süresi Kontrol Aracı ⏳🔑
+# Mali Mühür ve E-İmza Süre Kontrol Aracı ⏱️🔏
 
-[![Lisans: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI Tests](https://github.com/eimza-kep/mali-muhur-eimza-suresi-kontrol/actions/workflows/ci.yml/badge.svg)](https://github.com/eimza-kep/mali-muhur-eimza-suresi-kontrol/actions/workflows/ci.yml)
-[![Platform: Windows](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011%20%7C%20Server-blue.svg)](https://microsoft.com)
-[![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B%20%7C%207%2B-blueviolet.svg)](https://github.com/PowerShell/PowerShell)
-[![Blog](https://img.shields.io/badge/Rehber-E--%C4%B0mza%20Blog-22c55e.svg)](https://eimza-kep.github.io/eimza-blog/)
+[![Python CI](https://github.com/eimza-kep/mali-muhur-eimza-suresi-kontrol/actions/workflows/ci.yml/badge.svg)](https://github.com/eimza-kep/mali-muhur-eimza-suresi-kontrol/actions)
+[![Lisans: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Platform: Windows | Linux | Mac](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue.svg)](https://github.com)
+[![Blog](https://img.shields.io/badge/Rehber-Mali%20M%C3%BCh%C3%BCr%20Merkezi-purple.svg)](https://mali-muhur-merkezi.pages.dev/)
 
-Şirketlerin ve muhasebe departmanlarının en büyük kabuslarından biri, **ayın son günü e-Defter beratı yüklerken** veya **acil e-fatura keserken** mali mührün süresinin bittiğini fark etmektir. Yeni mali mührün TÜBİTAK Kamu SM tarafından üretilip kargoyla gelmesi en az 3 ila 7 iş günü sürdüğünden, binlerce liralık usulsüzlük cezalarıyla karşılaşılır.
-
-Bu açık kaynaklı hafif araç; bilgisayarınıza takılı USB Token'ları ve Windows Sertifika Deposu'nu tarayarak mali mühür ve e-imzanızın **kalan gün sayısını hesaplar**, renkli uyarılar üretir ve süresi yaklaşan sertifikalar için erkenden harekete geçmenizi sağlar.
+Türkiye'deki Mali Mühür (Kamu SM) ve E-İmza (TÜRKTRUST, E-Tuğra, E-Güven vb.) USB token cihazlarının sertifika geçerlilik sürelerini, son kullanma tarihlerini ve kalan gün sayılarını denetleyen; e-Defter ve e-Fatura krizlerini önceden haber veren açık kaynaklı denetim aracı.
 
 ---
 
-## 🖥️ Terminal Çıktı Örneği
+## ✨ Öne Çıkan Özellikler
 
-```text
-==========================================================================================
-         MALİ MÜHÜR & E-İMZA BİTİŞ SÜRESİ DENETLEME ARACI v1.0                            
-==========================================================================================
-Tarih: 19.09.2026 23:30 | Uyarı Eşiği: 30 Gün
-
-SERTİFİKA SAHİBİ / ŞİRKET           | VEREN KURUM          | BİTİŞ      | KALAN GÜN | DURUM
-------------------------------------------------------------------------------------------
-ABC YAZILIM TEKNOLOJİLERİ A.Ş.      | TÜBİTAK Kamu SM      | 2026-10-12 |        23 | 🚨 ACİL YENİLEME GEREKİYOR!
-AHMET YILMAZ (TC: 12345678901)      | TÜRKTRUST NES        | 2027-04-15 |       208 | 🟢 Güvenli
-XYZ İNŞAAT TİCARET LTD. ŞTİ.        | E-Tuğra ESHS         | 2026-08-01 |       -49 | ❌ SÜRESİ DOLMUŞ!
-```
+* 🔍 **Windows Sertifika Deposu Taraması:** `--scan-store` parametresi ile bilgisayara takılı tüm akıllı kart ve token sertifikalarını otomatik tespit eder.
+* 📁 **Dosya Tabanlı İnceleme:** `.cer`, `.crt`, `.pem` ve `.pfx` dosyalarını doğrudan analiz eder.
+* 🚨 **Özelleştirilebilir Uyarı Eşiği:** `--alert-days` ile kritik gün eşiklerini (örneğin 45 gün, 60 gün) tanımlayabilme.
+* 🇹🇷 **Milli ESHS Tanıma:** Kamu SM, TÜRKTRUST, E-Tuğra, E-Güven ve EDM Bilişim sertifikalarını otomatik ayırt eder.
+* 📊 **Çoklu Çıktı:** Terminal renkli çıktı, JSON ve Markdown rapor desteği.
 
 ---
 
 ## 🚀 Hızlı Başlangıç
 
-### 1. Dosyayı İndirip Çalıştırma
-* Repodaki **`check.bat`** dosyasına çift tıklamanız yeterlidir.
-* Sonuçlar anında terminalde listelenir.
-
-### 2. PowerShell ile Doğrudan Çalıştırma
-```powershell
-irm https://raw.githubusercontent.com/eimza-kep/mali-muhur-eimza-suresi-kontrol/main/Check-CertificateExpiry.ps1 | iex
+### 1. Takılı Akıllı Kartı / Tokenı Otomatik Tarama
+```bash
+python check_expiry.py --scan-store
 ```
 
-### 3. Özel Gün Eşiği Belirleme (Örn: 45 gün kala uyar)
-```powershell
-.\Check-CertificateExpiry.ps1 -AlertDays 45
+### 2. Sertifika Dosyasını İnceleme
+```bash
+python check_expiry.py mali_muhur.cer --alert-days 45
 ```
 
-### 4. Otomasyon & JSON Çıktısı (Zabbix, Nagios veya Özel Yazılımlar İçin)
-```powershell
-.\Check-CertificateExpiry.ps1 -AsJson
+### 3. JSON ve Markdown Raporu Alma
+```bash
+# Markdown formatında rapor oluşturma
+python check_expiry.py mali_muhur.cer --markdown
+
+# Otomasyon sistemleri için JSON çıktısı
+python check_expiry.py --scan-store --json
 ```
 
-### 5. CSV veya JSON Dosyasına Dışa Aktarma
+### 4. Windows PowerShell İle Doğrudan Çalıştırma
 ```powershell
-# CSV olarak kaydetme
-.\Check-CertificateExpiry.ps1 -ExportPath "sertifika-raporu.csv"
-
-# Yalnızca süresi dolan veya yaklaşanları filtreleme
-.\Check-CertificateExpiry.ps1 -OnlyExpiring
-
-# Kritik süredeki sertifikalarda hata kodu (exit code 1) döndürme (CI/CD / Monitoring)
-.\Check-CertificateExpiry.ps1 -FailOnCritical
+powershell -ExecutionPolicy Bypass -File .\Check-CertificateExpiry.ps1
 ```
 
 ---
 
-## ⏰ Otomatik Haftalık Kontrol Kurulumu (Önerilen)
+## 🔗 E-Dönüşüm Açık Kaynak Ekosistemi
 
-Şirketinizde bu kontrolü unutmamak için Windows Görev Zamanlayıcısı'na (Task Scheduler) tek bir komutla haftalık görev ekleyebilirsiniz:
+Bu araç [eimza-kep](https://github.com/eimza-kep) organizasyonunun açık kaynak e-dönüşüm araçları ekosisteminin bir parçasıdır:
 
-```powershell
-$action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File C:\Tools\Check-CertificateExpiry.ps1"
-$trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Monday -At 9am
-Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "MaliMuhurSureKontrol" -Description "Haftalık Mali Mühür ve E-İmza Bitiş Tarihi Denetimi"
-```
-
----
-
-## 🏢 Desteklenen Sertifika Sağlayıcıları (ESHS)
-
-* ✅ **TÜBİTAK BİLGEM Kamu Sertifikasyon Merkezi (Kamu SM)** (Mali Mühür & Kurumsal E-İmza)
-* ✅ **TÜRKTRUST**
-* ✅ **E-Tuğra**
-* ✅ **E-Güven (Elektronik Bilgi Güvenliği A.Ş.)**
-* ✅ **TN KEP / TN Bilişim**
-* ✅ **Bilgi Teknolojileri (BilgiTek)**
-* ✅ **EDM Bilişim**
+* 🇹🇷 **[awesome-turkiye-e-donusum](https://github.com/eimza-kep/awesome-turkiye-e-donusum):** Türkiye E-Dönüşüm kütüphane, mevzuat ve araçlar listesi.
+* 📊 **[gib-edefter-berat-xml-dogrulayici](https://github.com/eimza-kep/gib-edefter-berat-xml-dogrulayici):** GİB e-Defter ve berat doğrulama aracı.
+* 🩺 **[akilli-kart-surucu-teshis](https://github.com/eimza-kep/akilli-kart-surucu-teshis):** Akıllı kart okuyucu ve sürücü teşhis aracı.
+* 🔓 **[eimza-pin-bloke-asistani](https://github.com/eimza-kep/eimza-pin-bloke-asistani):** USB token PIN kilitlendiğinde PUK kodu ile sıfırlama terminali.
 
 ---
 
-## 📚 İlgili Rehberler ve Çözüm Yazıları
-
-Mali mühür süresi bittiğinde yapılması gereken resmi kriz prosedürleri ve detaylı rehberler için blogumuzu inceleyebilirsiniz:
+## 📚 İlgili Teknik Rehberler
+* 📄 [Mali Mühür Sertifika Süresi Dolduğunda Cezalı Duruma Düşmemek İçin Ne Yapılmalı?](https://mali-muhur-merkezi.pages.dev/yazilar/mali-muhur-suresi-doldu-ne-yapilmali.html)
+* 📄 [e-Defter Berat Yükleme Günü Mali Mühür Çalışmazsa Acil Eylem Planı](https://mali-muhur-merkezi.pages.dev/yazilar/e-defter-berat-gunu-mali-muhur-calismazsa-cozum.html)
+* 📄 [Mali Mühür Başvurusu Nasıl Yapılır ve Kaç Günde Gelir?](https://mali-muhur-merkezi.pages.dev/yazilar/mali-muhur-basvuru-sureci-ve-teslimat-suresi.html)
 
 ---
 
 ## ⚖️ Lisans
 
-Bu yazılım [MIT Lisansı](LICENSE) ile lisanslanmıştır. Tamamen ücretsizdir.
-
-### 📚 İlgili Rehber ve Çözümler
-* 📄 [Mali Mühür ile Bireysel E-İmza Arasındaki 3 Temel Fark](https://mali-muhur-merkezi.pages.dev/yazilar/mali-muhur-ve-e-imza-arasindaki-farklar.html)
-* 📄 [Mali Mührün Bozulması veya Kaybolması Durumunda Acil Eylem Planı](https://mali-muhur-merkezi.pages.dev/yazilar/mali-muhur-arizalandi-kayboldu-ne-yapilmali.html)
-* 📄 [Yeni Limited Şirket Kuruluşunda Mali Mühür Ne Zaman Çıkarılmalı?](https://mali-muhur-merkezi.pages.dev/yazilar/limited-sirket-kurulusunda-mali-muhur-ne-zaman-alinir.html)
-* 📄 [E-İmzanın Süresi Dolmadan Kaç Gün Önce Yenileme Yapılmalı?](https://eimza-rehberi.pages.dev/yazilar/e-imza-yenileme-ne-zaman-yapilmali.html)
+Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
