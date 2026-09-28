@@ -3,7 +3,7 @@
 [![Python CI](https://github.com/eimza-kep/mali-muhur-eimza-suresi-kontrol/actions/workflows/ci.yml/badge.svg)](https://github.com/eimza-kep/mali-muhur-eimza-suresi-kontrol/actions)
 [![Lisans: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Platform: Windows | Linux | Mac](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue.svg)](https://github.com)
-[![Blog](https://img.shields.io/badge/Rehber-Mali%20M%C3%BCh%C3%BCr%20Merkezi-purple.svg)](https://mali-muhur-merkezi.pages.dev/)
+[![Blog](https://img.shields.io/badge/Rehber-Mali%20M%C3%BCh%C3%BCr%20Merkezi-purple.svg)](https://malimuhur.site/)
 
 Türkiye'deki Mali Mühür (Kamu SM) ve E-İmza (TÜRKTRUST, E-Tuğra, E-Güven vb.) USB token cihazlarının sertifika geçerlilik sürelerini, son kullanma tarihlerini ve kalan gün sayılarını denetleyen; e-Defter ve e-Fatura krizlerini önceden haber veren açık kaynaklı denetim aracı.
 
@@ -59,9 +59,9 @@ Bu araç [eimza-kep](https://github.com/eimza-kep) organizasyonunun açık kayna
 ---
 
 ## 📚 İlgili Teknik Rehberler
-* 📄 [Mali Mühür Sertifika Süresi Dolduğunda Cezalı Duruma Düşmemek İçin Ne Yapılmalı?](https://mali-muhur-merkezi.pages.dev/yazilar/mali-muhur-suresi-doldu-ne-yapilmali.html)
-* 📄 [e-Defter Berat Yükleme Günü Mali Mühür Çalışmazsa Acil Eylem Planı](https://mali-muhur-merkezi.pages.dev/yazilar/e-defter-berat-gunu-mali-muhur-calismazsa-cozum.html)
-* 📄 [Mali Mühür Başvurusu Nasıl Yapılır ve Kaç Günde Gelir?](https://mali-muhur-merkezi.pages.dev/yazilar/mali-muhur-basvuru-sureci-ve-teslimat-suresi.html)
+* 📄 [Mali Mühür Sertifika Süresi Dolduğunda Cezalı Duruma Düşmemek İçin Ne Yapılmalı?](https://malimuhur.site/yazilar/mali-muhur-suresi-doldu-ne-yapilmali.html)
+* 📄 [e-Defter Berat Yükleme Günü Mali Mühür Çalışmazsa Acil Eylem Planı](https://malimuhur.site/yazilar/e-defter-berat-gunu-mali-muhur-calismazsa-cozum.html)
+* 📄 [Mali Mühür Başvurusu Nasıl Yapılır ve Kaç Günde Gelir?](https://malimuhur.site/yazilar/mali-muhur-basvuru-sureci-ve-teslimat-suresi.html)
 
 ---
 

@@ -7,7 +7,7 @@ Sertifika dosyalarını (.cer, .crt, .pem, .p12, .pfx) ve Windows Kişisel Serti
 Deposundaki (MY Store) takılı token sertifikalarını tarayarak kalan gün sayısını,
 ESHS sağlayıcısını ve acil yenileme uyarılarını raporlar.
 
-Yazar: E-İmza & Dijital Dönüşüm Portalı (https://mali-muhur-merkezi.pages.dev/)
+Yazar: E-İmza & Dijital Dönüşüm Portalı (https://malimuhur.site/)
 Lisans: MIT
 """
 
