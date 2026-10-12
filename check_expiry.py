@@ -30,7 +30,8 @@ KNOWN_ESHS = [
     "Kamu SM", "Kamu Sertifikasyon Merkezi", "TUBITAK", "TÜBİTAK",
     "TURKTRUST", "TÜRKTRUST", "E-Tugra", "E-Tuğra", "E-Guven", "E-Güven",
     "Elektronik Bilgi Guvenligi", "TN KEP", "Bilgi Teknolojileri",
-    "EDM Bilisim", "EDM Bilişim", "Klon Bilisim", "Mali Muhur", "Mali Mühür"
+    "EDM Bilisim", "EDM Bilişim", "Klon Bilisim", "Mali Muhur", "Mali Mühür",
+    "E-İmzaTR", "E-İmza TR", "PTT Bilgi Teknolojileri", "Türksat"
 ]
 
 def check_certificate_dates(not_before, not_after, now=None, alert_days=30):
