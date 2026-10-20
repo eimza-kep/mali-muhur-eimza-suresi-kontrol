@@ -1,6 +1,6 @@
 import unittest
 from datetime import datetime, timedelta, timezone
-from check_expiry import check_certificate_dates, is_turkish_eshs
+from check_expiry import check_certificate_dates, is_turkish_eshs, format_webhook_payload
 
 class TestCertificateExpiry(unittest.TestCase):
     def test_check_certificate_dates_expired(self):
@@ -57,6 +57,21 @@ class TestCertificateExpiry(unittest.TestCase):
         self.assertTrue(is_turkish_eshs("CN=TURKTRUST Nitelikli Elektronik Sertifika Hizmetleri"))
         self.assertTrue(is_turkish_eshs("CN=E-Tugra EBG Bilisim Teknolojileri"))
         self.assertFalse(is_turkish_eshs("CN=DigiCert Global Root CA, OU=www.digicert.com"))
+
+    def test_format_webhook_payload(self):
+        mock_payload = {
+            "subject": "CN=Ahmet Yılmaz, SERIALNUMBER=12345678901",
+            "issuer": "CN=Kamu SM Nitelikli Elektronik Sertifika",
+            "status": "CRITICAL",
+            "status_text": "KRİTİK ACİL (5 gün kaldı)",
+            "days_remaining": 5
+        }
+        wb = format_webhook_payload(mock_payload)
+        self.assertIn("text", wb)
+        self.assertIn("content", wb)
+        self.assertIn("Ahmet Yılmaz", wb["text"])
+        self.assertIn("Kamu SM", wb["text"])
+        self.assertIn("5 gün kaldı", wb["text"])
 
 if __name__ == "__main__":
     unittest.main()

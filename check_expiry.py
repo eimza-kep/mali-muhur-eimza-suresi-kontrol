@@ -164,6 +164,41 @@ def scan_windows_cert_store(alert_days=30):
 
     return certs
 
+def format_webhook_payload(payload):
+    """Webhook için bildirim yükü (Slack, Discord, Teams uyumlu) oluşturur."""
+    subject = payload.get("subject", "Bilinmeyen Sertifika")
+    issuer = payload.get("issuer", "Bilinmeyen ESHS")
+    status_text = payload.get("status_text", "Bilinmiyor")
+    days = payload.get("days_remaining", 0)
+    
+    text_content = f"⚠️ [Mali Mühür / E-İmza Uyarısı]\nSertifika: {subject}\nESHS: {issuer}\nDurum: {status_text}\nKalan Süre: {days} gün"
+    return {
+        "text": text_content,
+        "content": text_content,
+        "certificate": payload
+    }
+
+def send_webhook_alert(webhook_url, payload, timeout=5.0):
+    """
+    Kritik veya süresi dolan sertifikalar için Webhook POST isteği gönderir.
+    Sıfır ek bağımlılık (Pure Python Standard Library - urllib.request).
+    """
+    import urllib.request
+    
+    body_data = format_webhook_payload(payload)
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    req = urllib.request.Request(
+        webhook_url,
+        data=json.dumps(body_data).encode("utf-8"),
+        headers=headers,
+        method="POST"
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return True, f"Webhook başarıyla iletildi (HTTP {resp.status})"
+    except Exception as e:
+        return False, f"Webhook iletim hatası: {e}"
+
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="Mali Mühür ve E-İmza Süre Kontrol Aracı v1.2")
@@ -172,6 +207,7 @@ def main():
     parser.add_argument("--alert-days", type=int, default=30, help="Uyarı eşik gün sayısı (varsayılan: 30)")
     parser.add_argument("--json", action="store_true", help="JSON formatında çıktı ver")
     parser.add_argument("--markdown", action="store_true", help="Markdown formatında rapor üret")
+    parser.add_argument("--webhook", help="Uyarı durumunda (CRITICAL/WARNING/EXPIRED) JSON alert gönderilecek Webhook URL")
     args = parser.parse_args()
 
     if args.scan_store:
@@ -234,6 +270,10 @@ def main():
     print(f"Bitiş           : {res.get('not_after')}")
     print(f"Durum           : {res.get('status_text')}")
     print("=" * 65)
+
+    if args.webhook and res.get("status") in ["CRITICAL", "WARNING", "EXPIRED"]:
+        ok, msg = send_webhook_alert(args.webhook, res)
+        print(f"\n[Webhook] {msg}")
 
 if __name__ == "__main__":
     main()
