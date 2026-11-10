@@ -436,6 +436,20 @@ def generate_markdown_report(certs):
     lines.append("")
     return "\n".join(lines)
 
+
+def format_telegram_alert(cert_info: dict) -> str:
+    """Telegram bildirim formatında Markdown mesajı hazırlar."""
+    days = cert_info.get("days_remaining", 0)
+    status_emoji = "🚨" if days <= 7 else ("⚠️" if days <= 30 else "ℹ️")
+    return (
+        f"{status_emoji} *Sertifika Süre Uyarısı*\n\n"
+        f"• *Unvan/Sahip:* `{cert_info.get('subject_cn', 'Bilinmiyor')}`\n"
+        f"• *Sağlayıcı:* `{cert_info.get('issuer_o', 'Bilinmiyor')}`\n"
+        f"• *Son Geçerlilik:* `{cert_info.get('not_after', 'Bilinmiyor')}`\n"
+        f"• *Kalan Süre:* *{days} gün*\n\n"
+        f"Lütfen süre dolmadan Kamu SM / ESHS üzerinden yenileme başvurusu yapınız."
+    )
+
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="Mali Mühür ve E-İmza Süre Kontrol, Webhook & E-Posta Aracı v1.3")
